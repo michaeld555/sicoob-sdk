@@ -6,6 +6,8 @@ use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Michaeld555\Formater\RequestBoletoMaker;
 use Michaeld555\Options\EnvironmentUrls;
+use Michaeld555\Services\Boleto;
+use Michaeld555\Services\WebhookBoleto;
 
 class SicoobBoleto
 {
@@ -166,6 +168,16 @@ class SicoobBoleto
 
     public function getRequestMaker(): RequestBoletoMaker {
         return $this->requestMaker;
+    }
+
+    public function boleto(string $numeroBoleto = null, bool $debug = false): Boleto
+    {
+        return new Boleto($this->getRequestMaker(), $numeroBoleto);
+    }
+
+    public function webhook(string $idWebhook = null, bool $debug = false): WebhookBoleto
+    {
+        return new WebhookBoleto($this->getRequestMaker(), $idWebhook);
     }
 
 }
