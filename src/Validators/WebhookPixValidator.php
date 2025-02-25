@@ -5,7 +5,7 @@ namespace Michaeld555\Validators;
 use Exception;
 use Valitron\Validator;
 
-class WebhookValidator
+class WebhookPixValidator
 {
 
     private array $body;

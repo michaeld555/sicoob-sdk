@@ -4,13 +4,10 @@ namespace Michaeld555;
 
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
-use Michaeld555\Formater\RequestMaker;
+use Michaeld555\Formater\RequestBoletoMaker;
 use Michaeld555\Options\EnvironmentUrls;
-use Michaeld555\Services\Cob;
-use Michaeld555\Services\CobV;
-use Michaeld555\Services\Webhook;
 
-class Sicoob
+class SicoobBoleto
 {
 
     private string $base_url;
@@ -31,7 +28,7 @@ class Sicoob
 
     private array $certificatePriv;
     
-    private RequestMaker $requestMaker;
+    private RequestBoletoMaker $requestMaker;
 
     public function __construct(
         bool $isProduction = true,
@@ -66,7 +63,7 @@ class Sicoob
 
         $this->client_id = $client_id;
 
-        $this->permissions = !empty($permissions) ? $permissions : 'cob.read cob.write cobv.write cobv.read lotecobv.write lotecobv.read pix.write pix.read webhook.read webhook.write payloadlocation.write payloadlocation.read';
+        $this->permissions = !empty($permissions) ? $permissions : 'boletos_inclusao boletos_consulta boletos_alteracao webhooks_alteracao webhooks_consulta webhooks_inclusao';
         
         $this->certificatePub = [$certificatePubPath, $certificatePubPass];
         
@@ -74,7 +71,7 @@ class Sicoob
         
         $this->token = $isProduction ? $this->gerarToken() : $sandboxToken;
         
-        $this->requestMaker = new RequestMaker($this, !$isProduction);
+        $this->requestMaker = new RequestBoletoMaker($this, !$isProduction);
         
         $this->expires_in = 0;
 
@@ -167,23 +164,8 @@ class Sicoob
         return $this->certificatePriv;
     }
 
-    public function getRequestMaker(): RequestMaker {
+    public function getRequestMaker(): RequestBoletoMaker {
         return $this->requestMaker;
-    }
-
-    public function cob(string $txid = null, bool $debug = false): Cob
-    {
-        return new Cob($this->getRequestMaker(), $txid);
-    }
-
-    public function cobv(string $txid = null, bool $debug = false): CobV
-    {
-        return new CobV($this->getRequestMaker(), $txid);
-    }
-
-    public function webhook(string $chave = null, bool $debug = false): Webhook
-    {
-        return new Webhook($this->getRequestMaker(), $chave);
     }
 
 }

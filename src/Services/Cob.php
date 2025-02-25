@@ -4,7 +4,7 @@ namespace Michaeld555\Services;
 
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
-use Michaeld555\Formater\RequestMaker;
+use Michaeld555\Formater\RequestPixMaker;
 use Michaeld555\Helpers\QRCodeGenerator;
 use Michaeld555\Validators\CobValidator;
 use stdClass;
@@ -12,11 +12,11 @@ use stdClass;
 class Cob
 {
 
-    private RequestMaker $req;
+    private RequestPixMaker $req;
 
     private ?string $txid;
 
-    public function __construct(RequestMaker $req, ?string $txid = null)
+    public function __construct(RequestPixMaker $req, ?string $txid = null)
     {
         $this->req = $req;
         $this->txid = $txid;

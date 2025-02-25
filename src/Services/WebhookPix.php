@@ -4,19 +4,19 @@ namespace Michaeld555\Services;
 
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
-use Michaeld555\Formater\RequestMaker;
+use Michaeld555\Formater\RequestPixMaker;
 use Michaeld555\Helpers\TxidGenerator;
-use Michaeld555\Validators\WebhookValidator;
+use Michaeld555\Validators\WebhookPixValidator;
 use stdClass;
 
-class Webhook
+class WebhookPix
 {
 
-    private RequestMaker $req;
+    private RequestPixMaker $req;
 
     private ?string $chave;
 
-    public function __construct(RequestMaker $req, ?string $chave = null)
+    public function __construct(RequestPixMaker $req, ?string $chave = null)
     {
 
         if(empty($chave)){
@@ -32,7 +32,7 @@ class Webhook
     public function criar(array $body): string | GuzzleException | array | stdClass | null
     {
 
-        $webhookValidator = new WebhookValidator($body);
+        $webhookValidator = new WebhookPixValidator($body);
 
         $webhookValidator->validatePut();
 
@@ -55,7 +55,7 @@ class Webhook
             throw new Exception('A chave é obrigatória para atualizar webhook');
         }
 
-        $webhookValidator = new WebhookValidator($body);
+        $webhookValidator = new WebhookPixValidator($body);
 
         $webhookValidator->validatePut();
 

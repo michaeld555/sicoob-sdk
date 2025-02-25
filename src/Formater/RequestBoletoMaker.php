@@ -5,11 +5,11 @@ namespace Michaeld555\Formater;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Michaeld555\Options\EnvironmentUrls;
-use Michaeld555\Sicoob;
+use Michaeld555\SicoobBoleto;
 use stdClass;
 
 
-class RequestMaker
+class RequestBoletoMaker
 {
 
     private bool $debug;
@@ -18,13 +18,13 @@ class RequestMaker
 
     private string $base_url;
 
-    private Sicoob $sicoob;
+    private SicoobBoleto $sicoob;
 
     private array $certificatePub;
 
     private array $certificatePriv;
 
-    public function __construct(Sicoob $sicoob, bool $debug = false)
+    public function __construct(SicoobBoleto $sicoob, bool $debug = false)
     {
 
         if($sicoob->getIsProduction()) {
@@ -41,7 +41,7 @@ class RequestMaker
 
         $this->sicoob = $sicoob;
 
-        $this->base_url = !$sicoob->getIsProduction() ? EnvironmentUrls::sandbox_url : EnvironmentUrls::production_url;
+        $this->base_url = !$sicoob->getIsProduction() ? EnvironmentUrls::sandbox_boleto_url : EnvironmentUrls::production_boleto_url;
 
         $this->debug = $debug;
 
