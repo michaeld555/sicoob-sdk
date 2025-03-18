@@ -90,4 +90,24 @@ class Boleto
 
     }
 
+    public function baixar(array $body): string | GuzzleException | array | stdClass
+    {
+
+        if(empty($this->numeroBoleto)) {
+            throw new Exception('O numero do boleto é obrigatório para marcar a baixa');
+        }
+
+
+        try {
+
+            return $this->req->requisicao('/boletos/{$this->numeroBoleto}/baixar', 'POST', $body);
+
+        } catch (GuzzleException $e) {
+
+            return $e;
+
+        }
+
+    }
+
 }
