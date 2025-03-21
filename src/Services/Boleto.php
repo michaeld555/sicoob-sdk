@@ -100,7 +100,7 @@ class Boleto
 
         try {
 
-            return $this->req->requisicao('/boletos/{$this->numeroBoleto}/baixar', 'POST', $body);
+            return $this->req->requisicao("/boletos/{$this->numeroBoleto}/baixar", 'POST', $body);
 
         } catch (GuzzleException $e) {
 
